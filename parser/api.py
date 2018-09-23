@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 import requests
 
 url = 'https://www.miamidade.gov/PApublicServiceProxy/PaServicesProxy.ashx'

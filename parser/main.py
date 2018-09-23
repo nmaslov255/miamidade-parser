@@ -1,9 +1,8 @@
 #!/usr/bin/python3
-
 import pandas as pd
-import numpy as np
 
 import api
+import output
 
 def replace_dash(folio):
     return int(folio.replace('-', ''))
@@ -25,7 +24,7 @@ def get_property_rows_from_json(json):
     
 
 if __name__ == '__main__':
-    folio_list = pd.read_csv('Miami - Dade Folio ID.csv', squeeze=True)
+    folio_list = pd.read_csv('~/Desktop/Miami - Dade Folio ID.csv', squeeze=True)
 
     rows = []
     for folio in folio_list:
@@ -33,16 +32,9 @@ if __name__ == '__main__':
         rows.extend(get_property_rows_from_json(json))
     rows = pd.DataFrame(rows)
 
-
-    # save to exel
-    output = 'contracts.xlsx'
+    outfile = 'contracts.xlsx'
     sheetname = 'Sales Information'
-
-    writer = pd.ExcelWriter(output, engine='xlsxwriter')
-    rows.to_excel(writer, sheet_name=sheetname, index=False)
-    worksheet = writer.sheets[sheetname]
-    for idx, col in enumerate(rows):
-        maxlen = np.max([len(str(el)) for el in rows[col]])+1
-        worksheet.set_column(idx, idx, maxlen)
+    # save to exel
+    writer = output.format_to_exel(rows, outfile, sheetname)
     writer.save()
 
