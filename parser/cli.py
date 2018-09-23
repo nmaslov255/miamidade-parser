@@ -4,7 +4,7 @@ import argparse
 parser = argparse.ArgumentParser(
     description='Contracts parser from miamidade.gov')
 
-parser.add_argument('-c', '--csv', type=str,
+parser.add_argument('csv', type=str,
     help='route to csv file with folios numbers')
 parser.add_argument('-o', '--out', type=str,
     help='filename for save results (in xlsx)')

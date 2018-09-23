@@ -17,21 +17,23 @@ def get_contracts_from_raw_data(json_dict, with_second_owner=False):
     Returns:
         object -- pandas.Series like table rows from website
     """
+    columns = ['Folio', 'Date', 'Price', 'OR Book-Page',
+               'Qualification Description', 'Seller', 'Buyer']
+    if with_second_owner:
+        columns.extend(['Seller 2', 'Buyer 2'])
+
     contracts = []
     for p in json_dict['SalesInfos']:
         bookpage = '%s-%s' % (p['OfficialRecordBook'], 
                               p['OfficialRecordPage'])
 
-        contract = pd.Series({
-            'Folio': folio, 'Date': p['DateOfSale'],
-            'Price': p['SalePrice'], 'OR Book-Page': bookpage,
-            'Qualification Description': p['QualificationDescription'],
-            'Seller': p['GrantorName1'], 'Buyer': p['GranteeName1'],
-        })
+        contract = [folio, p['DateOfSale'], p['SalePrice'], 
+                    bookpage, p['QualificationDescription'],
+                    p['GrantorName1'],  p['GranteeName1']]
         if with_second_owner:
-            contract = contract.append(pd.Series({'Seller 2': p['GrantorName2'], 
-                                                  'Buyer 2': p['GranteeName2']}))
-        contracts.append(contract)
+            contract.extend([p['GrantorName2'], p['GranteeName2']])
+
+        contracts.append(pd.Series(contract, columns))
     return contracts
     
 
