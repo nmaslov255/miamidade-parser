@@ -14,7 +14,7 @@ PARAMS = {
     'clientAppName': 'PropertySearch',
 }
 
-def get_properties_by_folio(folio):
+def get_contracts_info_by_folio(folio):
     """wallpaper for http requests, return json dict with contact properties
     
     Arguments:
