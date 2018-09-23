@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import requests
 
-url = 'https://www.miamidade.gov/PApublicServiceProxy/PaServicesProxy.ashx'
+URL = 'https://www.miamidade.gov/PApublicServiceProxy/PaServicesProxy.ashx'
 
 # without this header, the server will response json error: 
 # 412 - Request is not coming from an authorized UI
@@ -24,8 +24,7 @@ def get_contracts_info_by_folio(folio):
         dict -- json properties of contact
     """
     params = {**PARAMS, **{'folioNumber': folio}}
-    print(folio)
-    response = requests.get(url, params=params, headers=HEADERS)
+    response = requests.get(URL, params=params, headers=HEADERS)
     
     if response.status_code != 200:
         response.raise_for_status()
