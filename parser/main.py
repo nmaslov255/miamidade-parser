@@ -12,7 +12,8 @@ def replace_dash(folio):
 
 def date_parse(str):
     date = [int(n) for n in str.split('/')]
-    return datetime(date[-1], date[-3], date[-2])
+    year, month, day = date[-1], date[-3], date[-2]
+    return datetime(year, month, day)
 
 def get_contracts_from_raw_data(json_dict, with_second_owner=False,
                                 min_date=None):

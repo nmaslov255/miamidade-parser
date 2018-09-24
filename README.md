@@ -4,6 +4,6 @@
 3. python3 -m venv .
 4. source bin/activate
 5. pip3 install -r requirements.txt
-6. python3 parser/main.py 'route/folios.csv' 'route/results.xlsx'
+6. python3 parser/main.py 'route/folios.csv' 'route/results.xlsx' --min-year 2008
 
 Or use: python3 main.py --help
