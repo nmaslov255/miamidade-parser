@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import pandas as pd
 from progress.bar import Bar
+from datetime import datetime
 
 import api
 import output
@@ -9,7 +10,12 @@ import cli
 def replace_dash(folio):
     return int(folio.replace('-', ''))
 
-def get_contracts_from_raw_data(json_dict, with_second_owner=False):
+def date_parse(str):
+    date = [int(n) for n in str.split('/')]
+    return datetime(date[-1], date[-3], date[-2])
+
+def get_contracts_from_raw_data(json_dict, with_second_owner=False,
+                                min_date=None):
     """
     Arguments:
         json_dict {dict} -- json dict with parsed info from website
@@ -24,6 +30,11 @@ def get_contracts_from_raw_data(json_dict, with_second_owner=False):
 
     contracts = []
     for p in json_dict['SalesInfos']:
+        # date filter
+        if min_date != None:
+            if min_date > date_parse(p['DateOfSale']):
+                continue
+
         bookpage = '%s-%s' % (p['OfficialRecordBook'], 
                               p['OfficialRecordPage'])
 
@@ -44,7 +55,8 @@ if __name__ == '__main__':
     contracts_table = []
     for folio in folios_list:
         json = api.get_contracts_info_by_folio(replace_dash(folio))
-        contracts_table.extend(get_contracts_from_raw_data(json, cli.args.wso))
+        contracts_table.extend(get_contracts_from_raw_data(json, cli.args.wso, 
+                                                           cli.args.min_year))
         Progressbar.next()
     contracts_table = pd.DataFrame(contracts_table)
 
