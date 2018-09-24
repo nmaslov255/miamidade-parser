@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument('csv', type=str,
     help='route to csv file with folios numbers')
-parser.add_argument('-o', '--out', type=str,
+parser.add_argument('out', type=str,
     help='filename for save results (in xlsx)')
 parser.add_argument('-wso', '--with-second-owner', action='store_true', 
     help='makes columns "seller 2" and "buyer 2" in Excel table')
