@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+import os 
+
 import pandas as pd
 from progress.bar import Bar
 from datetime import datetime
@@ -51,7 +53,7 @@ def get_contracts_from_raw_data(json_dict, with_second_owner=False,
 
 if __name__ == '__main__':
     folios_list = pd.read_csv(cli.args.csv, squeeze=True)
-    Progressbar = Bar('Processing', max=len(folios_list))
+    Progressbar = Bar('Processing property information', max=len(folios_list))
 
     contracts_table = []
     for folio in folios_list:
@@ -67,4 +69,7 @@ if __name__ == '__main__':
     writer.save()
 
     Progressbar.finish()
+
+    print('Owner data success saved in:')
+    print(os.path.abspath(cli.args.out))
 

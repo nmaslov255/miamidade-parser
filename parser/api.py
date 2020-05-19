@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 import requests
 
-URL = 'https://www.miamidade.gov/PApublicServiceProxy/PaServicesProxy.ashx'
+DOMAIN = 'https://www.miamidade.gov/'
+URL = DOMAIN + 'Apps/PA/PApublicServiceProxy/PaServicesProxy.ashx'
 
 # without this header, the server will response json error: 
 # 412 - Request is not coming from an authorized UI
